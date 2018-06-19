@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+cp dhcpd.conf /etc/dhcp/
+systemctl restart dhcpd.service
