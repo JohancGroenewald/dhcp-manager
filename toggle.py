@@ -31,7 +31,7 @@ def main(arguments):
 
     conf_unc = os.path.join(args.path, OUTFILE) if args.path else OUTFILE
 
-    print('<conf_unc: {}>'.format(conf_unc))
+    print('<{}>'.format(conf_unc))
 
     with open(conf_unc) as f:
         buffer = f.read()
