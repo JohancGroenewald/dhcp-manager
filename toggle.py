@@ -6,6 +6,7 @@
 from __future__ import print_function
 import sys
 import argparse
+import os
 from collections import OrderedDict
 
 from master import OUTFILE, EOL
@@ -22,13 +23,20 @@ def main(arguments):
     parser.add_argument(
         '-g', '--gateway', help="Gateway", type=str
     )
+    parser.add_argument(
+        '-p', '--path', help="Config path", type=str
+    )
 
     args = parser.parse_args(arguments)
 
-    with open(OUTFILE) as f:
+    conf_unc = os.path.join(args.path, OUTFILE) if args.path else OUTFILE
+
+    print('<conf_unc: {}>'.format(conf_unc))
+
+    with open(conf_unc) as f:
         buffer = f.read()
     if len(buffer) == 0:
-        print('{} is empty'.format(OUTFILE))
+        print('{} is empty'.format(conf_unc))
         return
     lines = buffer.split(EOL)
 
@@ -80,7 +88,7 @@ def main(arguments):
                 print(named_computer)
                 for i in computer_info:
                     print(lines[i])
-                with open(OUTFILE, 'w') as f:
+                with open(conf_unc, 'w') as f:
                     f.write(EOL.join(lines))
                 print('<dhcp.conf successfully updated>')
             else:
